@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { motion } from 'framer-motion'
 import {
   Activity, Baby, Trophy, ShieldCheck, Award, MapPin, Clock, Phone, Mail,
   Calendar, Menu, X, Star, Quote, Instagram, Facebook, Linkedin, ArrowRight,
@@ -13,6 +14,13 @@ const NAV = [
 ]
 
 const BOOKING_URL = 'https://www.onedoc.ch/fr/osteopathe/geneve'
+
+const sectionReveal = {
+  initial: { opacity: 0, y: 36 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, amount: 0.18 },
+  transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] },
+}
 
 function Logo({ className = '' }) {
   return (
@@ -51,7 +59,7 @@ function Navbar({ onBook }) {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-pearl-50/85 backdrop-blur-md border-b border-pearl-200' : 'bg-transparent'}`}>
+    <header className={`fixed top-0 left-0 right-0 z-50 bg-white/70 backdrop-blur-md transition-all duration-300 ${scrolled ? 'border-b border-pearl-200 shadow-sm shadow-sage-900/5' : 'border-b border-white/20'}`}>
       <nav className="max-w-7xl mx-auto px-6 lg:px-12 h-20 flex items-center justify-between">
         <Logo />
         <div className="hidden md:flex items-center gap-10">
@@ -85,12 +93,12 @@ function Navbar({ onBook }) {
 
 function Hero({ onBook }) {
   return (
-    <section id="top" className="relative pt-32 pb-24 lg:pt-44 lg:pb-32 overflow-hidden">
+    <motion.section id="top" className="relative pt-32 pb-24 lg:pt-44 lg:pb-32 overflow-hidden" {...sectionReveal}>
       <div className="absolute inset-0 grain opacity-40 pointer-events-none" />
       <div className="absolute top-40 -right-32 w-[480px] h-[480px] rounded-full bg-sage-200/40 blur-3xl" />
       <div className="absolute -bottom-20 -left-20 w-[380px] h-[380px] rounded-full bg-sage-100/60 blur-3xl" />
       <div className="relative max-w-7xl mx-auto px-6 lg:px-12 grid lg:grid-cols-12 gap-12 items-center">
-        <div className="lg:col-span-7 fade-up">
+        <div className="lg:col-span-7">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-sage-100 border border-sage-200 text-sage-700 text-xs uppercase tracking-[0.18em] mb-8">
             <span className="w-1.5 h-1.5 rounded-full bg-sage-500 animate-pulse" />
             Cabinet ouvert · Plainpalais, Genève
@@ -114,7 +122,7 @@ function Hero({ onBook }) {
             <div className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-sage-500" /> 1ʳᵉ séance sous 48h</div>
           </div>
         </div>
-        <div className="lg:col-span-5 fade-up" style={{ animationDelay: '0.2s' }}>
+        <div className="lg:col-span-5">
           <div className="relative">
             <div className="aspect-[4/5] rounded-3xl bg-gradient-to-br from-sage-200 via-sage-100 to-pearl-100 overflow-hidden relative shadow-2xl shadow-sage-900/10">
               <div className="absolute inset-0 flex items-center justify-center">
@@ -141,7 +149,7 @@ function Hero({ onBook }) {
           </div>
         </div>
       </div>
-    </section>
+    </motion.section>
   )
 }
 
@@ -168,7 +176,7 @@ const SERVICES = [
 
 function Services({ onBook }) {
   return (
-    <section id="services" className="py-24 lg:py-32 relative">
+    <motion.section id="services" className="py-24 lg:py-32 relative" {...sectionReveal}>
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         <div className="max-w-2xl mb-16 lg:mb-20">
           <div className="text-xs uppercase tracking-[0.22em] text-sage-500 mb-4">Nos spécialités</div>
@@ -179,7 +187,7 @@ function Services({ onBook }) {
         </div>
         <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
           {SERVICES.map((s, i) => (
-            <article key={i} className="group bg-pearl-50 border border-pearl-200 rounded-3xl p-8 lg:p-10 hover:border-sage-300 hover:shadow-xl hover:shadow-sage-900/5 transition-all duration-500 hover:-translate-y-1">
+            <article key={i} className="group bg-pearl-50 border border-pearl-200 rounded-3xl p-8 lg:p-10 shadow-sm shadow-sage-900/5 hover:border-sage-300 hover:shadow-md hover:shadow-sage-900/10 transition-all duration-500 hover:-translate-y-1">
               <div className="w-14 h-14 rounded-2xl bg-sage-100 flex items-center justify-center mb-8 group-hover:bg-sage-600 transition-colors duration-500">
                 <s.icon className="w-6 h-6 text-sage-700 group-hover:text-pearl-50 transition-colors duration-500" strokeWidth={1.5} />
               </div>
@@ -200,7 +208,7 @@ function Services({ onBook }) {
           ))}
         </div>
       </div>
-    </section>
+    </motion.section>
   )
 }
 
@@ -212,7 +220,7 @@ const REASSURANCE = [
 
 function Reassurance() {
   return (
-    <section id="apropos" className="py-24 lg:py-32 bg-sage-50/60 border-y border-pearl-200 relative overflow-hidden">
+    <motion.section id="apropos" className="py-24 lg:py-32 bg-sage-50/60 border-y border-pearl-200 relative overflow-hidden" {...sectionReveal}>
       <div className="absolute inset-0 grain opacity-30 pointer-events-none" />
       <div className="relative max-w-7xl mx-auto px-6 lg:px-12 grid lg:grid-cols-12 gap-16 items-start">
         <div className="lg:col-span-5">
@@ -250,7 +258,7 @@ function Reassurance() {
           ))}
         </div>
       </div>
-    </section>
+    </motion.section>
   )
 }
 
@@ -277,7 +285,7 @@ const TESTIMONIALS = [
 
 function Testimonials() {
   return (
-    <section id="avis" className="py-24 lg:py-32 relative">
+    <motion.section id="avis" className="py-24 lg:py-32 relative" {...sectionReveal}>
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         <div className="max-w-2xl mb-16">
           <div className="text-xs uppercase tracking-[0.22em] text-sage-500 mb-4">Ils nous font confiance</div>
@@ -305,13 +313,13 @@ function Testimonials() {
           ))}
         </div>
       </div>
-    </section>
+    </motion.section>
   )
 }
 
 function CTASection({ onBook }) {
   return (
-    <section className="py-24 lg:py-32">
+    <motion.section className="py-24 lg:py-32" {...sectionReveal}>
       <div className="max-w-5xl mx-auto px-6 lg:px-12">
         <div className="relative bg-sage-800 rounded-3xl p-10 lg:p-16 overflow-hidden">
           <div className="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-sage-600/40 blur-3xl" />
@@ -336,7 +344,7 @@ function CTASection({ onBook }) {
           </div>
         </div>
       </div>
-    </section>
+    </motion.section>
   )
 }
 
@@ -414,8 +422,8 @@ function Footer() {
 function BookingModal({ open, onClose }) {
   if (!open) return null
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-sage-900/60 backdrop-blur-sm fade-up" onClick={onClose}>
-      <div className="bg-pearl-50 rounded-3xl max-w-md w-full p-8 lg:p-10 relative shadow-2xl" onClick={e => e.stopPropagation()}>
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-sage-900/60 backdrop-blur-sm" onClick={onClose}>
+      <motion.div initial={{ opacity: 0, y: 24, scale: 0.97 }} animate={{ opacity: 1, y: 0, scale: 1 }} transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }} className="bg-pearl-50 rounded-[2rem] max-w-md w-full p-8 lg:p-10 relative border border-white/70 shadow-2xl shadow-sage-900/20" onClick={e => e.stopPropagation()}>
         <button onClick={onClose} className="absolute top-5 right-5 w-9 h-9 rounded-full hover:bg-pearl-200 flex items-center justify-center transition-colors">
           <X className="w-5 h-5 text-sage-700" />
         </button>
@@ -438,8 +446,8 @@ function BookingModal({ open, onClose }) {
           <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
         </a>
         <p className="text-xs text-sage-500 text-center mt-4">Connexion sécurisée · Données chiffrées</p>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   )
 }
 
